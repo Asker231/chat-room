@@ -1,10 +1,11 @@
 package auth
 
 import (
-	"fmt"
+
 	"net/http"
 
 	"github.com/Asker231/chat-room.git/pkg/req"
+	"github.com/Asker231/chat-room.git/pkg/res"
 )
 
 type AuthHandler struct{
@@ -25,9 +26,14 @@ func(a *AuthHandler)Register()http.HandlerFunc{
 
 			isRegister,err := a.Service.RegisterUser(body.Name,body.Email,body.Password)
 			if err != nil{
+				res.Response(w,RegisterCreateResponse{
+					Msg:err.Error() ,
+					CreateUser: isRegister,
+				},404)
 				return
 			}
-			fmt.Println(isRegister)
+
+			
 
 	}
 }
